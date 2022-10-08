@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from './Button.module.css'
 
-const Button = ({children}) => {
+const Button = ({children, onClick}) => {
   return (
-    <button className={styles.button}>
+    <button onClick={onClick} className={styles.button}>
       <span>{children}</span>
     <img className={styles.arrow} src='/images/arrow-forward.png' alt='arrow'/>
   </button>

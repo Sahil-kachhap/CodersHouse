@@ -9,6 +9,7 @@ function App() {
     <Navigation />
       <Routes>
         <Route path='/' exact element={<Home />} />
+        <Route path='/register' exact element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
