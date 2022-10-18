@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Home.module.css'
-import {Link, useHistory, useNavigate} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import Card from '../../components/shared/Card/Card'
 import Button from '../../components/shared/Button/Button'
 
@@ -12,10 +12,10 @@ const Home = () => {
     marginLeft: '10px'
   }
 
-  const navigate = useNavigate();
+  const navigate = useHistory();
 
   function startRegister(){
-     navigate('/register');
+     navigate.push('/authenticate');
   }
 
   return (
@@ -27,11 +27,10 @@ const Home = () => {
         to make sure nothing breaks. 
       </p>
       <div>
-        <Button onClick={startRegister}>Get your username</Button>
+        <Button onClick={startRegister}>Let's Go</Button>
       </div>
       <div className={styles.signinWrapper}>
         <span className={styles.hasInvite}>Have an invite text?</span>
-        <Link style={signInLinkStyle} to={"/login"}>Sign in</Link>
       </div>
     </Card>
     </div>
@@ -39,4 +38,3 @@ const Home = () => {
 }
 
 export default Home
-// 45:38
