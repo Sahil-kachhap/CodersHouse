@@ -1,5 +1,7 @@
 const hashService = require('../services/hash-service');
-const otpService = require('../services/otp-service')
+const otpService = require('../services/otp-service');
+const tokenService = require('../services/token-service');
+const userService = require('../services/user-service');
 
 class AuthController{
     async sendOtp(req, res){
@@ -27,14 +29,14 @@ class AuthController{
         }
     }
 
-    verifyOtp(req, res){
+    async verifyOtp(req, res){
         const {otp, hash, phone} = req.body;
         if(!otp || !hash || !phone){
             res.status(400).json({message: 'All fields are required'});
         }
 
         const [hashedOtp, expires] = hash.split('.');
-        if(Date.now() > expires){
+        if(Date.now() > +expires){
             res.status(400).json({message: 'OTP expired'}); 
         }
 
@@ -46,6 +48,18 @@ class AuthController{
         }
 
         let user, accessToken, refreshToken;
+
+        try {
+            user = await userService.findUser({phone});
+            if(!user){
+                user = await userService.createUser({phone});
+            }
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({message: 'DB error...'});
+        }
+
+        tokenService.generateTokens();
     }
 }
 
